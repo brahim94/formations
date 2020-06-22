@@ -28,8 +28,9 @@
             </field>
         </record>
 
+
          <record model="ir.actions.act_window" id="axe_formation_action">
-            <field name="name">Formations</field>
+            <field name="name">Axe Formations</field>
             <field name="res_model">rh_plus.axe_formation</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
@@ -102,10 +103,26 @@
             </field>
         </record>
 
+        <record id="planing_formation_view_calendar" model="ir.ui.view">
+            <field name="name">planing.formation.calendar</field>
+            <field name="model">rh_plus.planning</field>
+            <field name="arch" type="xml">
+                <calendar string="Planing Request"
+                            date_start="date_begin"
+                            date_stop="date_end"
+                            event_open_popup="true"
+                            mode="month"
+                            quick_add="False">
+                    <field name="estimated_budget"/>
+                    <field name="mode_plan"/>
+                </calendar>
+            </field>
+        </record>
+
          <record model="ir.actions.act_window" id="planing_formation_action">
             <field name="name">Planing</field>
             <field name="res_model">rh_plus.planning</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,calendar</field>
             <field name="help" type="html">
                     <p class="oe_view_nocontent_smiling_face"> créer votre premièr planing de fromation </p>
             </field>
@@ -116,6 +133,237 @@
     id="planing_formation_menu" 
     sequence="99" 
     action="planing_formation_action"
+    groups ="base.group_user"/>
+
+
+
+        <record id='formation_view_form' model='ir.ui.view'>
+            <field name="name">formation.form</field>
+            <field name="model">rh_plus.formation</field>
+            <field name="arch" type="xml">
+               <form>
+               <sheet>
+                    <div class='oe_title'>
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                </sheet>
+             </form>
+            </field>
+        </record>
+
+        <record id="formation_view_tree" model="ir.ui.view">
+            <field name="name">formation.tree</field>
+            <field name="model">rh_plus.formation</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree> 
+            </field>
+        </record>
+
+
+         <record model="ir.actions.act_window" id="formation_action">
+            <field name="name">Formations</field>
+            <field name="res_model">rh_plus.formation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                    <p class="oe_view_nocontent_smiling_face"> créer votre première formation </p>
+            </field>
+        </record>
+
+        <menuitem name="Formation"  
+    parent="configuration_formation_menu" 
+    id="formation_menu" 
+    sequence="2" 
+    action="formation_action"
+    groups ="base.group_user"/>
+
+
+        <record id='request_formation_view_form' model='ir.ui.view'>
+            <field name="name">request.formation.form</field>
+            <field name="model">rh_plus.demande_formation</field>
+            <field name="arch" type="xml">
+               <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class='oe_title'>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                        <group col="2">
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="date_request" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="fiche_poste"/>
+                                <field name="service"/>
+                            </group>
+                        </group>
+                        <notebook>
+                        <page string="Detail formation">
+                            <group name="container_row_2">
+                                        <group priority="1">
+                                                <field name="type_request"/>
+                                                <field name="nature_request"/>
+                                                <field name="priority"/>
+                                                <field name="mode_request"/>     
+                                        </group>
+                                        <group>
+                                                <field name="planing_id"  attrs="{'invisible':[('nature_request', '!=', 'prev')]}" />
+                                                <field name="axe_formation_id" attrs="{'invisible':[('nature_request', '!=', 'prev')]}"/>
+                                                <field name="formation_id" attrs="{'invisible':[('nature_request', '!=', 'prev')]}"/>
+                                        </group>
+                                        <group priority="2">
+                                                <field name="date_begin"/>
+                                                <field name="date_end"/>
+                                        </group>
+                                        <group>
+                                                <field name="duration"/>
+                                                <field name="duration_unit"/>
+                                                <field name="absence_duration"/>
+                                                <field name="absece_duration_unit"/>
+                                        </group>
+                                    </group>
+                        </page>
+                        <page string="Financement">
+                            <group name="container_row_2">
+                                        <group priority="1">
+                                                <field name="financial_type"/>   
+                                        </group>
+                                        <group>
+                                                <field name="financial_item"/>
+                                        </group>
+                                        <group priority="2">
+                                                <field name="etablissment_cordination"/>
+                                        </group>
+                                        <group>
+                                                <field name="etablissment_location"/>
+                                        </group>
+                            </group>
+                        </page>     
+                         <page string="Objectif/Résultats">
+                            <group name="container_row_2">
+                                        <group priority="1">
+                                                <field name="objectif_wanted"/>   
+                                        </group>
+                                        <group>
+                                                <field name="result_wanted"/>
+                                        </group>
+                                        <group priority="2">
+                                                <field name="themat"/>
+                                        </group>
+                                        <group>
+                                                <field name="themat_reference"/>
+                                        </group>
+                            </group>
+                        </page>    
+                    </notebook>
+                </sheet>
+             </form>
+            </field>
+        </record>
+
+         <record id="request_formation_view_tree" model="ir.ui.view">
+            <field name="name">request.formation.tree</field>
+            <field name="model">rh_plus.demande_formation</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="employee_id"/>
+                    <field name="fiche_poste"/>
+                    <field name="service"/>
+                </tree> 
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="request_formation_action">
+            <field name="name">Request Formations</field>
+            <field name="res_model">rh_plus.demande_formation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                    <p class="oe_view_nocontent_smiling_face"> créer votre première Demande de formation </p>
+            </field>
+        </record>
+
+        <menuitem name="Demande formation"  
+    parent="menu_root" 
+    id="request_formation_menu" 
+    sequence="96" 
+    action="request_formation_action"
+    groups ="base.group_user"/>
+
+     <record id='request_still_formation_view_form' model='ir.ui.view'>
+            <field name="name">still.formation.form</field>
+            <field name="model">rh_plus.encours_formation</field>
+            <field name="arch" type="xml">
+               <form>
+               <sheet>
+                    <div class='oe_title'>
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                </sheet>
+             </form>
+            </field>
+        </record>
+
+         <record model="ir.actions.act_window" id="request_still_formation_action">
+            <field name="name">Request Formations Still</field>
+            <field name="res_model">rh_plus.encours_formation</field>
+            <field name="view_mode">form</field>
+            <field name="help" type="html">
+                    <p class="oe_view_nocontent_smiling_face"> créer votre première Demande de formation </p>
+            </field>
+        </record>
+
+
+     <menuitem name="Demande en cours"  
+    parent="menu_root" 
+    id="request_still_formation_menu"
+    action="request_still_formation_action" 
+    sequence="97"
+    groups ="base.group_user"/>
+
+
+    <record id='analytic_formation_view_form' model='ir.ui.view'>
+            <field name="name">analytic.formation.form</field>
+            <field name="model">rh_plus.analyse_formation</field>
+            <field name="arch" type="xml">
+               <form>
+               <sheet>
+                    <div class='oe_title'>
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                </sheet>
+             </form>
+            </field>
+        </record>
+
+         <record model="ir.actions.act_window" id="analytic_formation_action">
+            <field name="name">Formations Analytic</field>
+            <field name="res_model">rh_plus.analyse_formation</field>
+            <field name="view_mode">form</field>
+            <field name="help" type="html">
+                    <p class="oe_view_nocontent_smiling_face"> créer votre première Demande de formation </p>
+            </field>
+        </record>
+
+     <menuitem name="Analyses"  
+    parent="menu_root" 
+    id="analytic_formation_menu" 
+    sequence="98" 
+    action="analytic_formation_action"
     groups ="base.group_user"/>
 
     </odoo>

@@ -1,3 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_rh_plus_axe_formation,access_rh_plus_axe_formation,model_rh_plus_axe_formation,base.group_user,1,1,1,1
 access_rh_plus_planning,access_rh_plus_planning,model_rh_plus_planning,base.group_user,1,1,1,1
+access_rh_plus_formation,access_rh_plus_formation,model_rh_plus_formation,base.group_user,1,1,1,1
+access_rh_plus_demande_formation,access_rh_plus_demande_formation,model_rh_plus_demande_formation,base.group_user,1,1,1,1
+access_rh_plus_encours_formation,access_rh_plus_encours_formation,model_rh_plus_encours_formation,base.group_user,1,1,1,1
+access_rh_plus_analyse_formation,access_rh_plus_analyse_formation,model_rh_plus_analyse_formation,base.group_user,1,1,1,1
