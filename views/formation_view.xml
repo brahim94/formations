@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id='axe_formation_view_form' model='ir.ui.view'>
+            <field name="name">axe.formation.form</field>
+            <field name="model">rh_plus.axe_formation</field>
+            <field name="arch" type="xml">
+               <form>
+               <sheet>
+                    <div class='oe_title'>
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                </sheet>
+             </form>
+            </field>
+        </record>
+
+        <record id="axe_formation_view_tree" model="ir.ui.view">
+            <field name="name">axe.formation.tree</field>
+            <field name="model">rh_plus.axe_formation</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree> 
+            </field>
+        </record>
+
+         <record model="ir.actions.act_window" id="axe_formation_action">
+            <field name="name">Formations</field>
+            <field name="res_model">rh_plus.axe_formation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                    <p class="oe_view_nocontent_smiling_face"> créer votre premièr axe de formation </p>
+            </field>
+        </record>
+
+        <menuitem name="Formations" 
+    id="menu_root" 
+    sequence="115" 
+    groups="base.group_user" 
+    web_icon="formations,static/description/icon.png"/>
+
+    <menuitem name="Configuration"  
+    parent="menu_root" 
+    id="configuration_formation_menu" 
+    sequence="100" 
+    groups ="base.group_user"/>
+    
+    <menuitem name="Axe formation"  
+    parent="configuration_formation_menu" 
+    id="axe_formation_menu" 
+    sequence="1" 
+    action="axe_formation_action"
+    groups ="base.group_user"/>
+
+
+    <record id='planing_formation_view_form' model='ir.ui.view'>
+            <field name="name">planing.formation.form</field>
+            <field name="model">rh_plus.planning</field>
+            <field name="arch" type="xml">
+               <form>
+                <sheet>
+                <group col="2">
+                        <group>
+                            <field name="date_begin"/>
+                            <field name="year"/>
+                            <field name="obligated"/>
+                        </group>
+                        <group>
+                            <field name="date_end"/>
+                            <field name="estimated_budget"/>
+                            <field name="mode_plan"/>
+                        </group>
+                    </group>
+                    <notebook>
+                            <page name="public" string="Axe de formations">
+                                <field name="formationaxe_id" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+                            </page>
+                    </notebook>
+                </sheet>
+             </form>
+            </field>
+        </record>
+
+        <record id="planing_formation_view_tree" model="ir.ui.view">
+            <field name="name">planing.formation.tree</field>
+            <field name="model">rh_plus.planning</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="date_begin"/>
+                    <field name="date_end"/>
+                    <field name="estimated_budget"/>
+                    <field name="mode_plan"/>
+                </tree> 
+            </field>
+        </record>
+
+         <record model="ir.actions.act_window" id="planing_formation_action">
+            <field name="name">Planing</field>
+            <field name="res_model">rh_plus.planning</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                    <p class="oe_view_nocontent_smiling_face"> créer votre premièr planing de fromation </p>
+            </field>
+        </record>
+
+         <menuitem name="Planning"  
+    parent="menu_root" 
+    id="planing_formation_menu" 
+    sequence="99" 
+    action="planing_formation_action"
+    groups ="base.group_user"/>
+
+    </odoo>
